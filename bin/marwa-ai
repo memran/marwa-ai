@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Marwa AI CLI - Standalone command-line interface
+ */
+
+$autoloadPaths = [
+    __DIR__ . '/../vendor/autoload.php',
+    __DIR__ . '/../../../vendor/autoload.php',
+];
+
+$autoloadFile = null;
+foreach ($autoloadPaths as $path) {
+    if (file_exists($path)) {
+        $autoloadFile = $path;
+        break;
+    }
+}
+
+if (!$autoloadFile) {
+    die("Composer autoloader not found. Please run 'composer install'.\n");
+}
+
+require $autoloadFile;
+
+use Marwa\AI\Console\AskCommand;
+use Marwa\AI\Console\ChatCommand;
+use Marwa\AI\Console\ProvidersCommand;
+use Marwa\AI\MarwaAI;
+use Symfony\Component\Console\Application;
+
+// Initialize with configuration
+$configPath = __DIR__ . '/../config/ai.php';
+$config = file_exists($configPath) ? require $configPath : [
+    'default' => getenv('AI_PROVIDER') ?: 'ollama',
+    'ollama' => [
+        'base_url' => getenv('OLLAMA_BASE_URL') ?: 'http://localhost:11434/v1/',
+        'model' => getenv('OLLAMA_MODEL') ?: 'llama3.2',
+    ],
+];
+
+MarwaAI::initialize($config);
+
+$app = new Application('Marwa AI CLI', '1.0.0');
+$app->addCommand(new ChatCommand());
+$app->addCommand(new AskCommand());
+$app->addCommand(new ProvidersCommand());
+$app->run();
