@@ -362,25 +362,66 @@ $response = $ai->conversation('Hello')->send();
 ```php
 // config/ai.php
 return [
-    'default' => getenv('AI_PROVIDER') ?: 'ollama',
+    'default' => 'ollama',
 
     'providers' => [
+        'openai' => [
+            'api_key' => getenv('OPENAI_API_KEY'),
+            'model' => 'gpt-4o',
+            'timeout' => 60,
+            'retries' => 3,
+        ],
+        'anthropic' => [
+            'api_key' => getenv('ANTHROPIC_API_KEY'),
+            'model' => 'claude-3-opus-20240229',
+        ],
+        'google' => [
+            'api_key' => getenv('GOOGLE_API_KEY'),
+            'model' => 'gemini-1.5-pro',
+        ],
+        'grok' => [
+            'api_key' => getenv('XAI_API_KEY'),
+            'model' => 'grok-2-latest',
+        ],
+        'mistral' => [
+            'api_key' => getenv('MISTRAL_API_KEY'),
+            'model' => 'mistral-large-latest',
+        ],
+        'deepseek' => [
+            'api_key' => getenv('DEEPSEEK_API_KEY'),
+            'model' => 'deepseek-chat',
+        ],
         'ollama' => [
-            'base_url' => getenv('OLLAMA_BASE_URL') ?: 'http://localhost:11434/v1/',
-            'model' => getenv('OLLAMA_MODEL') ?: 'llama3.2',
+            'base_url' => 'http://localhost:11434/v1/',
+            'model' => 'llama3.2',
         ],
     ],
-
-    'memory' => [
-        'driver' => 'array',
-        'prefix' => 'marwa_ai:',
-        'similarity_threshold' => 0.75,
-    ],
 ];
-
-// Usage
-$ai = MarwaAI::initialize(require 'config/ai.php');
 ```
+
+## Detailed Provider Configuration
+
+Each provider supports the following parameters in the configuration array:
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `api_key` | string | Your provider API key |
+| `model` | string | Default model to use for requests |
+| `base_url` | string | Custom API endpoint (e.g., for proxies or local Ollama) |
+| `timeout` | int | Request timeout in seconds (default: 30) |
+| `retries` | int | Number of automatic retries on failure (default: 3) |
+
+### Environment Variables Reference
+
+| Provider | API Key Env | Default Model | Base URL Env |
+|----------|-------------|---------------|--------------|
+| **OpenAI** | `OPENAI_API_KEY` | `gpt-4o` | `OPENAI_BASE_URL` |
+| **Anthropic** | `ANTHROPIC_API_KEY` | `claude-3-opus` | - |
+| **Google** | `GOOGLE_API_KEY` | `gemini-pro` | - |
+| **xAI (Grok)**| `XAI_API_KEY` | `grok-2-latest` | - |
+| **Mistral** | `MISTRAL_API_KEY` | `mistral-large`| - |
+| **DeepSeek** | `DEEPSEEK_API_KEY` | `deepseek-chat`| - |
+| **Ollama** | - | `llama3.2` | `OLLAMA_BASE_URL` |
 
 ## Chain / Pipeline
 
