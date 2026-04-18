@@ -20,9 +20,9 @@ class MockClient implements AIClientInterface
 {
     private string $response;
 
-    public function __construct(string $response, private array $toolCalls = [])
+    public function __construct(mixed $response, private array $toolCalls = [])
     {
-        $this->response = $response;
+        $this->response = is_array($response) ? json_encode($response) : (string) $response;
     }
 
     public function completion(array $messages, array $options = []): AIResponseInterface

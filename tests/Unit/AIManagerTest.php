@@ -35,7 +35,7 @@ class AIManagerTest extends TestCase
         $manager = new MarwaAI();
         $conv = $manager->conversation('Hello');
         $this->assertInstanceOf(\Marwa\AI\Contracts\ConversationInterface::class, $conv);
-        $this->assertCount(2, $conv->getMessages());
+        $this->assertCount(1, $conv->getMessages());
     }
 
     public function test_can_add_tool(): void

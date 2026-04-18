@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Marwa\AI\Tests\Integration;
 
 use Marwa\AI\MarwaAI;
-use Marwa\AI\Support\MockClient;
+use Marwa\AI\Tests\Helpers\MockClient;
 use PHPUnit\Framework\TestCase;
 
 class EmbeddingTest extends TestCase
@@ -31,6 +31,7 @@ class EmbeddingTest extends TestCase
     public function test_embedding_usage(): void
     {
         $manager = new MarwaAI([]);
+        $manager->extend('test', fn() => new MockClient('test'));
         $embeddings = $manager->driver('test')->embed(['test text']);
 
         $usage = $embeddings->getUsage();
