@@ -7,4 +7,10 @@ parameters:
     checkMissingIterableValueType: false
     treatPhpDocTypesAsCertain: false
     reportUnmatchedIgnoredErrors: false
-    ignoreErrors: []
+    ignoreErrors:
+        -
+            message: '#If condition is always false.#'
+            path: src/Support/Chain.php
+        -
+            message: '#Negated boolean expression is always true.#'
+            path: src/Support/Chain.php

@@ -64,6 +64,11 @@ interface AIManagerInterface extends \Stringable
     public function chain(array $steps, array $context = []): ChainInterface;
 
     /**
+     * Generate embeddings for text
+     */
+    public function embed(array $texts, array $options = []): EmbeddingResponseInterface;
+
+    /**
      * Register a tool/function
      */
     public function tool(ToolDefinitionInterface $tool): void;

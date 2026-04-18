@@ -16,12 +16,11 @@ class Chain implements ChainInterface
 
     private ?array $context = null;
     private int $maxRetries = 0;
-    private ?callable $shouldRetryCallback = null;
-    private ?\Throwable $lastError = null;
+    /** @var ?callable */
+    private $shouldRetryCallback = null;
     private array $history = [];
     private bool $running = false;
     private bool $cancelled = false;
-    private mixed $result = null;
 
     public function __construct(array $steps = [], array $context = [])
     {
@@ -60,7 +59,7 @@ class Chain implements ChainInterface
         ]);
     }
 
-    public function retry(int $maxAttempts = 3, callable $shouldRetry = null): self
+    public function retry(int $maxAttempts = 3, ?callable $shouldRetry = null): self
     {
         $this->maxRetries = max(0, $maxAttempts - 1);
         $this->shouldRetryCallback = $shouldRetry;
@@ -79,6 +78,7 @@ class Chain implements ChainInterface
         $this->cancelled = false;
         $this->history = [];
         $input = $this->context;
+        $maxRetries = $this->maxRetries;
 
         foreach ($this->steps as $stepInfo) {
             if ($this->cancelled) {
@@ -88,7 +88,7 @@ class Chain implements ChainInterface
             $attempt = 0;
             $success = false;
 
-            while ($attempt <= $this->maxRetries && !$success && !$this->cancelled) {
+            while (!$success && !$this->cancelled) {
                 $start = microtime(true);
                 try {
                     $result = ($stepInfo['step'])($input, $this->getStepContext($stepInfo));
@@ -103,7 +103,6 @@ class Chain implements ChainInterface
 
                     $input = $result;
                 } catch (\Throwable $e) {
-                    $this->lastError = $e;
                     $this->history[] = new StepResult(
                         $stepInfo['name'],
                         $input,
@@ -112,20 +111,19 @@ class Chain implements ChainInterface
                         $e
                     );
 
-                    $shouldRetry = $this->shouldRetryCallback ?? fn() => true;
+                    $shouldRetry = $this->shouldRetryCallback;
 
-                    if ($shouldRetry($e, $attempt) && $attempt < $this->maxRetries) {
+                    if ($attempt < $maxRetries && $shouldRetry !== null && $shouldRetry($e, $attempt)) {
                         $attempt++;
                         usleep(100000 * $attempt);
                         continue;
                     }
-                    break 2;
+                    break;
                 }
             }
         }
 
         $this->running = false;
-        $this->result = $input;
         return $input;
     }
 

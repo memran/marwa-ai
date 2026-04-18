@@ -11,7 +11,7 @@ class RateLimitException extends AIException
         public readonly string $provider,
         string $message = '',
         int $code = 0,
-        ?Throwable $previous = null
+        ?\Throwable $previous = null
     ) {
         parent::__construct($message ?: "Rate limit exceeded for {$provider}. Retry after {$retryAfter}s.", $code, $previous);
     }

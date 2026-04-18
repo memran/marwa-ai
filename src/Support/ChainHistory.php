@@ -19,7 +19,7 @@ final class ChainHistory implements ChainHistoryInterface
 
     public function getSteps(): array
     {
-        return array_map(fn($s) => $s instanceof StepResult ? $s->toArray() : $s, $this->steps);
+        return array_map(fn(StepResult $s) => $s->toArray(), $this->steps);
     }
 
     public function getStep(int $index): ?StepResult
@@ -29,7 +29,7 @@ final class ChainHistory implements ChainHistoryInterface
 
     public function getTotalDuration(): float
     {
-        return array_sum(array_map(fn($s) => $s instanceof StepResult ? $s->duration : 0, $this->steps));
+        return (float) array_sum(array_map(fn(StepResult $s) => $s->duration, $this->steps));
     }
 
     public function isSuccess(): bool

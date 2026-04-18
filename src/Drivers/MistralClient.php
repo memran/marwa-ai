@@ -24,7 +24,7 @@ class MistralClient extends BaseDriver
 
     protected function getDefaultHeaders(): array
     {
-        $key = $this->config['api_key'] ?? getenv('MISTRAL_API_KEY') ?? '';
+        $key = $this->config['api_key'] ?? (getenv('MISTRAL_API_KEY') ?: '');
         return [
             'Authorization' => 'Bearer ' . $key,
             'Content-Type' => 'application/json',

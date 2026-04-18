@@ -24,7 +24,7 @@ class DeepSeekClient extends BaseDriver
 
     protected function getDefaultHeaders(): array
     {
-        $key = $this->config['api_key'] ?? getenv('DEEPSEEK_API_KEY') ?? '';
+        $key = $this->config['api_key'] ?? (getenv('DEEPSEEK_API_KEY') ?: '');
         return [
             'Authorization' => 'Bearer ' . $key,
             'Content-Type' => 'application/json',

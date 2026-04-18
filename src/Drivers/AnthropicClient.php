@@ -24,7 +24,7 @@ class AnthropicClient extends BaseDriver
 
     protected function getDefaultHeaders(): array
     {
-        $key = $this->config['api_key'] ?? getenv('ANTHROPIC_API_KEY') ?? '';
+        $key = $this->config['api_key'] ?? (getenv('ANTHROPIC_API_KEY') ?: '');
         return [
             'x-api-key' => $key,
             'anthropic-version' => '2023-06-01',

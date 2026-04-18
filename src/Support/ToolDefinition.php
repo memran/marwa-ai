@@ -12,7 +12,7 @@ final class ToolDefinition implements ToolDefinitionInterface
         private string $name,
         private string $description,
         private array $parameters,
-        private $callback,
+        private mixed $callback,
         private bool $required = false
     ) {}
 

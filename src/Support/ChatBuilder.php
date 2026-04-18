@@ -14,11 +14,15 @@ class ChatBuilder
     private array $options = [];
 
     public function __construct(
-        private AIClientInterface $client,
         ?ConversationInterface $conversation = null
     ) {
         $this->conversation = $conversation ?? new Conversation();
+    }
+
+    public function setClient(AIClientInterface $client): self
+    {
         $this->conversation->setClient($client);
+        return $this;
     }
 
     public function system(string $content): self

@@ -24,7 +24,7 @@ class GrokClient extends BaseDriver
 
     protected function getDefaultHeaders(): array
     {
-        $key = $this->config['api_key'] ?? getenv('XAI_API_KEY') ?? getenv('GROK_API_KEY') ?? '';
+        $key = $this->config['api_key'] ?? (getenv('XAI_API_KEY') ?: getenv('GROK_API_KEY') ?: '');
         return [
             'Authorization' => 'Bearer ' . $key,
             'Content-Type' => 'application/json',

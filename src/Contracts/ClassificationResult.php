@@ -28,8 +28,9 @@ final class ClassificationResult
 
     public function getAlternativeLabels(int $limit = 3): array
     {
-        uasort($this->allLabels, fn($a, $b) => $b <=> $a);
-        return array_slice($this->allLabels, 1, $limit, true);
+        $labels = $this->allLabels;
+        uasort($labels, fn($a, $b) => $b <=> $a);
+        return array_slice($labels, 1, $limit, true);
     }
 
     public function toArray(): array

@@ -41,7 +41,7 @@ interface AIResponseInterface extends \Stringable
     /**
      * Get tool calls if present
      *
-     * @return array<ToolCall>
+     * @return array<ToolCallInterface>
      */
     public function getToolCalls(): array;
 

@@ -71,6 +71,11 @@ trait DelegatesToManager
         return $this->getManager()->chain($steps, $context);
     }
 
+    public function embed(array $texts, array $options = []): \Marwa\AI\Contracts\EmbeddingResponseInterface
+    {
+        return $this->getManager()->embed($texts, $options);
+    }
+
     public function tool(ToolDefinitionInterface $tool): void
     {
         $this->getManager()->tool($tool);

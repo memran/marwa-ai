@@ -27,6 +27,11 @@ interface ConversationInterface
     public function tool(string $toolCallId, mixed $result, string $toolName): self;
 
     /**
+     * Set the AI client for the conversation
+     */
+    public function setClient(AIClientInterface $client): self;
+
+    /**
      * Get messages
      *
      * @return array<MessageInterface>

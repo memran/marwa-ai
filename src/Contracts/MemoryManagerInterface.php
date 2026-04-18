@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Marwa\AI\Contracts;
 
+use Marwa\AI\Contracts\MessageInterface;
+use Marwa\AI\Contracts\AIManagerInterface;
+
 /**
  * Conversation memory and context management
  */
@@ -12,7 +15,7 @@ interface MemoryManagerInterface
     /**
      * Set a memory item
      */
-    public function set(string $key, mixed $value, int $ttl = null): void;
+    public function set(string $key, mixed $value, ?int $ttl = null): void;
 
     /**
      * Get a memory item
@@ -42,7 +45,7 @@ interface MemoryManagerInterface
     /**
      * Remember a value (get or compute)
      */
-    public function remember(string $key, callable $callback, int $ttl = null): mixed;
+    public function remember(string $key, callable $callback, ?int $ttl = null): mixed;
 
     /**
      * Store conversation messages
@@ -54,7 +57,7 @@ interface MemoryManagerInterface
      *
      * @return array<MessageInterface>
      */
-    public function getMessages(string $conversationId, int $limit = null): array;
+    public function getMessages(string $conversationId, ?int $limit = null): array;
 
     /**
      * Summarize long conversations
@@ -64,7 +67,7 @@ interface MemoryManagerInterface
     /**
      * Search memory by embedding similarity
      */
-    public function search(string $query, int $limit = 5, float $threshold = 0.7): array;
+    public function search(string $query, int $limit = 5, ?float $threshold = null): array;
 
     /**
      * Add to semantic memory

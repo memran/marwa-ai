@@ -13,15 +13,14 @@ class MemoryManager implements MemoryManagerInterface
     /** @var array<string, mixed> */
     private array $memory = [];
 
-    /** @var array<string, array<int, array{role: string, content: string}>> */
+    /** @var array<string, array<int, MessageInterface>> */
     private array $conversations = [];
 
     /** @var array<string, array{text: string, embedding: array<float>|null, metadata: array}> */
     private array $semanticMemory = [];
 
-    private AIManagerInterface $ai;
+    private ?AIManagerInterface $ai = null;
     private float $similarityThreshold;
-    private ?array $vectorIndex = null;
 
     public function __construct(array $config = [])
     {
@@ -29,7 +28,7 @@ class MemoryManager implements MemoryManagerInterface
         $this->similarityThreshold = $config['similarity_threshold'] ?? 0.75;
     }
 
-    public function set(string $key, mixed $value, int $ttl = null): void
+    public function set(string $key, mixed $value, ?int $ttl = null): void
     {
         $this->memory[$key] = [
             'value' => $value,
@@ -73,7 +72,7 @@ class MemoryManager implements MemoryManagerInterface
         return array_map(fn($item) => $item['value'], $this->memory);
     }
 
-    public function remember(string $key, callable $callback, int $ttl = null): mixed
+    public function remember(string $key, callable $callback, ?int $ttl = null): mixed
     {
         if ($this->has($key)) {
             return $this->get($key);
@@ -87,19 +86,19 @@ class MemoryManager implements MemoryManagerInterface
     public function storeMessages(string $conversationId, array $messages): void
     {
         foreach ($messages as $message) {
-            $this->conversations[$conversationId][] = [
-                'role' => $message instanceof MessageInterface ? $message->getRole() : $message['role'],
-                'content' => $message instanceof MessageInterface ? $message->getContent() : $message['content'],
-            ];
+            $this->conversations[$conversationId][] = $message instanceof MessageInterface 
+                ? $message 
+                : Message::fromArray($message);
         }
     }
 
-    public function getMessages(string $conversationId, int $limit = null): array
+    public function getMessages(string $conversationId, ?int $limit = null): array
     {
         if (!isset($this->conversations[$conversationId])) {
             return [];
         }
 
+        /** @var array<MessageInterface> $messages */
         $messages = $this->conversations[$conversationId];
         if ($limit !== null) {
             $messages = array_slice($messages, -$limit);
@@ -115,7 +114,7 @@ class MemoryManager implements MemoryManagerInterface
             return '';
         }
 
-        $text = implode("\n", array_column($messages, 'content'));
+        $text = implode("\n", array_map(fn($m) => $m->getContent(), $messages));
 
         if (strlen($text) <= $maxTokens * 4) {
             return $text;

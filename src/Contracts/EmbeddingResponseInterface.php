@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Marwa\AI\Contracts;
 
-/**
- * @phpstan-import-type Vectors from \Marwa\AI\Support\Embedding
- */
 interface EmbeddingResponseInterface
 {
     /**

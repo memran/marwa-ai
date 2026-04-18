@@ -17,6 +17,10 @@ use Marwa\AI\Support\ToolCall;
 
 class OpenAIClient extends BaseDriver
 {
+    /**
+     * @var array<string, mixed>
+     */
+    protected array $config;
     protected function getBaseUri(): string
     {
         return $this->config['base_url'] ?? 'https://api.openai.com/v1/';
@@ -24,7 +28,7 @@ class OpenAIClient extends BaseDriver
 
     protected function getDefaultHeaders(): array
     {
-        $key = $this->config['api_key'] ?? getenv('OPENAI_API_KEY') ?? '';
+        $key = $this->config['api_key'] ?? (getenv('OPENAI_API_KEY') ?: '');
         return [
             'Authorization' => 'Bearer ' . $key,
             'Content-Type' => 'application/json',

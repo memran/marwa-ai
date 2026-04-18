@@ -53,6 +53,11 @@ final class AIResponse implements AIResponseInterface, \Stringable
         return !empty($this->toolCalls);
     }
 
+    /**
+     * Get tool calls if present
+     *
+     * @return array<ToolCallInterface>
+     */
     public function getToolCalls(): array
     {
         return $this->toolCalls;

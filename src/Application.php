@@ -39,7 +39,7 @@ class Application implements AIManagerInterface
         return (string) $this->manager;
     }
 
-    public function __call(string $method, array $args)
+    public function __call(string $method, array $args): mixed
     {
         return $this->manager->$method(...$args);
     }

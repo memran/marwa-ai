@@ -30,4 +30,9 @@ interface ToolCallInterface extends \Stringable
      * Execute the tool call
      */
     public function execute(): mixed;
+
+    /**
+     * Convert to array
+     */
+    public function toArray(): array;
 }

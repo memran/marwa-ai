@@ -16,7 +16,7 @@ class AIClientFactory
 
     private LoggerInterface $logger;
 
-    /** @var array<class-string, string> */
+    /** @var array<string, string> */
     private const DRIVER_MAP = [
         'openai' => \Marwa\AI\Drivers\OpenAIClient::class,
         'anthropic' => \Marwa\AI\Drivers\AnthropicClient::class,

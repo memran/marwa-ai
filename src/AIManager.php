@@ -138,6 +138,12 @@ class AIManager implements AIManagerInterface
         return new Chain($steps, $context);
     }
 
+    public function embed(array $texts, array $options = []): \Marwa\AI\Contracts\EmbeddingResponseInterface
+    {
+        $client = $this->driver($options['provider'] ?? $this->getDefaultProvider());
+        return $client->embed($texts, $options);
+    }
+
     public function tool(ToolDefinitionInterface $tool): void
     {
         $this->tools[$tool->getName()] = $tool;
@@ -216,8 +222,9 @@ class AIManager implements AIManagerInterface
 
     public function chat(string $provider = null): ChatBuilder
     {
-        $client = $this->driver($provider ?? $this->getDefaultProvider());
-        return new ChatBuilder($client);
+        $builder = new ChatBuilder();
+        $builder->setClient($this->driver($provider ?? $this->getDefaultProvider()));
+        return $builder;
     }
 
     public function stats(): array

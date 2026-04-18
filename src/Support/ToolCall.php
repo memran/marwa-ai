@@ -13,7 +13,7 @@ final class ToolCall implements ToolCallInterface
         private string $toolName,
         private array $arguments,
         private ?string $rawArguments = null,
-        private $callback = null
+        private mixed $callback = null
     ) {}
 
     public static function fromArray(array $data, ?callable $callback = null): self

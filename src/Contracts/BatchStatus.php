@@ -12,6 +12,7 @@ enum BatchStatus: string
     case FAILED = 'failed';
     case CANCELLED = 'cancelled';
     case PARTIAL = 'partial';
+    case UNKNOWN = 'unknown';
 
     public function isTerminal(): bool
     {
