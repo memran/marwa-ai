@@ -19,12 +19,12 @@ interface ChainInterface
     /**
      * Add a conditional branch
      */
-    public function conditional(callable $condition, callable $then, callable $else = null): self;
+    public function conditional(callable $condition, callable $then, ?callable $else = null): self;
 
     /**
      * Add retry logic
      */
-    public function retry(int $maxAttempts = 3, callable $shouldRetry = null): self;
+    public function retry(int $maxAttempts = 3, ?callable $shouldRetry = null): self;
 
     /**
      * Set context shared across steps

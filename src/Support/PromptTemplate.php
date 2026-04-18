@@ -56,13 +56,13 @@ class PromptTemplate implements PromptTemplateInterface
         return $result;
     }
 
-    public function variable(string $name, mixed $default = null, callable $transform = null): self
+    public function variable(string $name, mixed $default = null, ?callable $transform = null): self
     {
         $this->variables[$name] = $transform ? $transform($default) : $default;
         return $this;
     }
 
-    public function when(string $condition, string $template, callable $callback = null): self
+    public function when(string $condition, string $template, ?callable $callback = null): self
     {
         $placeholder = uniqid('when_', true);
         $this->conditionals[] = [$placeholder, $template];
@@ -70,7 +70,7 @@ class PromptTemplate implements PromptTemplateInterface
         return $this;
     }
 
-    public function loop(string $items, string $itemTemplate, callable $itemCallback = null): self
+    public function loop(string $items, string $itemTemplate, ?callable $itemCallback = null): self
     {
         $placeholder = uniqid('loop_', true);
         $this->loops[] = [$placeholder, $itemTemplate];

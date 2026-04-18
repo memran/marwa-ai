@@ -52,7 +52,7 @@ class Chain implements ChainInterface
         return $this;
     }
 
-    public function conditional(callable $condition, callable $then, callable $else = null): self
+    public function conditional(callable $condition, callable $then, ?callable $else = null): self
     {
         return $this->step(fn($input) => $condition($input) ? $then($input) : ($else ? $else($input) : $input), [
             'name' => 'conditional'

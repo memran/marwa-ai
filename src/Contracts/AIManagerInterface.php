@@ -122,7 +122,7 @@ interface AIManagerInterface extends \Stringable
     /**
      * Create a fluent chat builder
      */
-    public function chat(string $provider = null): \Marwa\AI\Support\ChatBuilder;
+    public function chat(?string $provider = null): \Marwa\AI\Support\ChatBuilder;
 
     /**
      * Get statistics/metrics

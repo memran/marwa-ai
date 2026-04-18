@@ -220,7 +220,7 @@ class AIManager implements AIManagerInterface
         return $this->conversation($prompt)->send($options);
     }
 
-    public function chat(string $provider = null): ChatBuilder
+    public function chat(?string $provider = null): ChatBuilder
     {
         $builder = new ChatBuilder();
         $builder->setClient($this->driver($provider ?? $this->getDefaultProvider()));

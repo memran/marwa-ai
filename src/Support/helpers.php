@@ -26,7 +26,7 @@ use Marwa\AI\Support\ToolDefinition;
 /**
  * Get the AI manager instance or a specific driver
  */
-function ai(string $provider = null): AIManagerInterface|AIClientInterface
+function ai(?string $provider = null): AIManagerInterface|AIClientInterface
 {
     /** @var AIManagerInterface $manager */
     $manager = MarwaAI::instance();
@@ -51,7 +51,7 @@ function prompt(string $template, array $variables = []): PromptTemplateInterfac
 /**
  * Start a fluent chat builder
  */
-function chat(string $provider = null): ChatBuilder
+function chat(?string $provider = null): ChatBuilder
 {
     /** @var AIManagerInterface $instance */
     $instance = MarwaAI::instance();
@@ -175,7 +175,7 @@ function ai_structured(string $schema, array $messages, array $options = []): St
 /**
  * Check provider health
  */
-function ai_health(string $provider = null): HealthCheckInterface
+function ai_health(?string $provider = null): HealthCheckInterface
 {
     /** @var AIManagerInterface $manager */
     $manager = MarwaAI::instance();

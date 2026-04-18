@@ -14,17 +14,17 @@ interface PromptTemplateInterface
     /**
      * Add a variable
      */
-    public function variable(string $name, mixed $default = null, callable $transform = null): self;
+    public function variable(string $name, mixed $default = null, ?callable $transform = null): self;
 
     /**
      * Add conditional block
      */
-    public function when(string $condition, string $template, callable $callback = null): self;
+    public function when(string $condition, string $template, ?callable $callback = null): self;
 
     /**
      * Add loop block
      */
-    public function loop(string $items, string $itemTemplate, callable $itemCallback = null): self;
+    public function loop(string $items, string $itemTemplate, ?callable $itemCallback = null): self;
 
     /**
      * Add a partial/template fragment

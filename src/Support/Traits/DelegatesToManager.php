@@ -124,7 +124,7 @@ trait DelegatesToManager
         return $this->getManager()->complete($prompt, $options);
     }
 
-    public function chat(string $provider = null): \Marwa\AI\Support\ChatBuilder
+    public function chat(?string $provider = null): \Marwa\AI\Support\ChatBuilder
     {
         return $this->getManager()->chat($provider);
     }

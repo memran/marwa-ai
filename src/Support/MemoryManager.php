@@ -129,7 +129,7 @@ class MemoryManager implements MemoryManagerInterface
         return substr($text, 0, $maxTokens * 4);
     }
 
-    public function search(string $query, int $limit = 5, float $threshold = null): array
+    public function search(string $query, int $limit = 5, ?float $threshold = null): array
     {
         $threshold ??= $this->similarityThreshold;
         $queryEmbedding = null;
