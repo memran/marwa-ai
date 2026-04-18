@@ -1,5 +1,12 @@
 # Marwa AI
 
+[![Latest Stable Version](https://img.shields.io/packagist/v/memran/marwa-ai.svg?style=flat-square)](https://packagist.org/packages/memran/marwa-ai)
+[![PHP Version Support](https://img.shields.io/packagist/php-v/memran/marwa-ai.svg?style=flat-square)](https://packagist.org/packages/memran/marwa-ai)
+[![Tests Status](https://img.shields.io/github/actions/workflow/status/memran/marwa-ai/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/memran/marwa-ai/actions)
+[![PHPStan Status](https://img.shields.io/badge/PHPStan-level%206-brightgreen.svg?style=flat-square)](https://phpstan.org/)
+[![Total Downloads](https://img.shields.io/packagist/dt/memran/marwa-ai.svg?style=flat-square)](https://packagist.org/packages/memran/marwa-ai)
+[![License](https://img.shields.io/packagist/l/memran/marwa-ai.svg?style=flat-square)](LICENSE)
+
 A comprehensive AI abstraction library for PHP with unified support for multiple AI providers.
 
 ## Features
