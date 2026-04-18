@@ -18,7 +18,7 @@ class EmbeddingTest extends TestCase
         $embeddings = $manager->driver('test')->embed(['hello world', 'hello there']);
 
         $this->assertCount(2, $embeddings->getEmbeddings());
-        $this->assertEquals(2, $embeddings->getDimensions());
+        $this->assertEquals(1536, $embeddings->getDimensions());
 
         $sim = \Marwa\AI\Support\EmbeddingResponse::similarity(
             $embeddings->getEmbedding(0),

@@ -21,7 +21,7 @@ class ConversationTest extends TestCase
 
     public function test_can_send_with_mock_client(): void
     {
-        $client = new MockClient(['Hello!']);
+        $client = new MockClient('Hello!');
         $conv = (new Conversation('Start'))->setClient($client);
 
         $response = $conv->send();
